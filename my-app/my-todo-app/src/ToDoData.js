@@ -1,4 +1,4 @@
-ToDoData = [
+const   ToDoData = [
     {
         id: 1,
         taskName: "Clear the car",

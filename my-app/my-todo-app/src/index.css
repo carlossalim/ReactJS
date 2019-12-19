@@ -16,3 +16,10 @@ code {
   font-style: italic;
   text-decoration: line-through;
 }
+.containerList{
+  
+  display: block;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+}
