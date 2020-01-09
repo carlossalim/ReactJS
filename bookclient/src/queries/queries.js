@@ -22,6 +22,24 @@ export const LIST_ALL_BOOK = gql`
 }
 `;
 
+export const LIST_BOOK_DETAIL = gql`
+query($id: ID!)
+{
+  book(id:$id) {
+    id
+    name
+    genre
+    author{
+      name
+      books{
+          name
+          genre
+      }
+    }
+  }
+}
+`;
+
 export const ADD_BOOK = gql`
 mutation addBook($name: String!, $genre: String!, $authorId: String!){
     addBook(name:$name, genre:$genre,  authorId:$authorId){
