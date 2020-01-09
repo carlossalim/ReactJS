@@ -1,18 +1,18 @@
 import React from "react"
 
-import { withRouter } from "react-router";
-
-
-
 class ParkadeDetail extends React.Component {
-
-    state = { parkades: [] }
-
-
 
     constructor(props) {
         super(props);
         this.getDetailParkade = this.getDetailParkade.bind(this);
+        this.state = {
+            id: '',
+            name: '',
+            description: '',
+            email: '',
+            isLoading: false
+
+        }
     }
 
     componentDidMount(props) {
@@ -31,41 +31,78 @@ class ParkadeDetail extends React.Component {
             })
             .then(parkades => {
                 // Setting STATE for parkades 
-                console.log('parkades', parkades)
-                this.setState({ parkades: parkades });
+                parkades.map(parkade => {
+                    return this.setState({ id: parkade.id, name: parkade.name, email: parkade.email, description: parkade.description })
+                })
             })
             .catch(err => console.log(err))
     }
 
+    changeHandler = (e) => {
+        this.setState({ [e.target.name]: e.target.value })
+    }
+
+    submitHandler = (e) => {
+        e.preventDefault()
+        const { id } = this.state;
+        this.setState({ isLoading: true, error: null })
+        fetch(`http://localhost:3000/api/parkade/update/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.state)
+        })
+            .then((res) => {
+                if (!res.ok) {
+                    this.setState({ error: res.statusText, isLoading: false })
+                    throw Error('Error saving parkade!' + res.statusText)
+                }
+                this.setState({ success: 'Parkade changed.', isLoading: false })
+                console.log(this.state)
+                return this.props.history.push('/parkade/listall')
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
 
     render() {
-        const { parkades } = this.state;
-        const myPost = (parkades.length) ? (parkades.map(parkade => {
-            return (
-                <div className="card" key={parkade.id}>
-                    <br />
-                    <div className="jumbotron py-3 my-0" >
-                        <a href="/parkade/listall" className="btn btn-lg btn-primary px-5 my-3" >List all itens</a>
+        const { id, name, email, description, error, success } = this.state;
+        const myPost = (id !== "") ?
+            <div className="" key={id} >
+                <br />
+                <h1>Parkade Detail </h1>
+                <div className="alert alert-danger" style={{ display: error ? 'block' : 'none' }} id='alertBox'> {error} </div>
+                <div className="alert alert-success" style={{ display: success ? 'block' : 'none' }} id='alertBox'> {success} </div>
+
+                <div className="jumbotron py-3 my-0" >
+                    <a href="/parkade/listall" className="btn btn-lg btn-primary px-5 my-3" >List all itens</a>
+                    <form onSubmit={this.submitHandler} method="POST">
                         <div className="container">
+                            <input className="form-control" type="hidden" id="id" name="id" value={id} />
                             <div className="row">
-                                <label for="name">Name</label>
-                                <input className="form-control" type="text" id="name" value={parkade.name} />
+                                <label>Name</label>
+                                <input className="form-control" type="text" id="name" name="name" onChange={this.changeHandler} value={name} required />
                             </div>
                             <div className="row">
-                                <label for="description">Description</label>
-                                <textarea id="description" className="form-control" value={parkade.description} />
+                                <label>Description</label>
+                                <textarea id="description" className="form-control" name="description" onChange={this.changeHandler} value={description} />
                             </div>
                             <div className="row">
-                                <label for="email">Email</label>
-                                <input type="text" id="email" className="form-control" value={parkade.email} />
+                                <label>Email</label>
+                                <input type="text" id="email" className="form-control" name="email" onChange={this.changeHandler} value={email} required />
                             </div>
                         </div>
-                    </div>
+                        <div className="d-flex justify-content-between">
+                            <a href={"/parkade/del/" + id} className="btn btn-lg btn-primary px-5 my-3" >Delete Parkade</a>
+                            <button type="submit" className="btn btn-lg btn-primary px-5 my-3 " >Update Parkade</button>
+                        </div>
+                    </form>
                 </div>
-            )
-
-        })) :
-            (<div className="center">No Post</div>)
+            </div>
+            :
+            (<div className="center">Loading ...</div>)
         return myPost
     }
 }
