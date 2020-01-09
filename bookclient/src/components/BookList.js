@@ -13,7 +13,7 @@ function BookList() {
   }
   if (error) {
     // console.log('Error: ', error)
-    if (selectedBook == "") {
+    if (selectedBook === "") {
       return <p>Click a book to see Details</p>;
     }
     return <p>Error :(</p>;

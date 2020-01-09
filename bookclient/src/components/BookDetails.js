@@ -14,7 +14,7 @@ function BookDetails(props) {
   }
   if (error) {
     console.log('Error: ', error)
-    if (bookId == "") {
+    if (bookId === "") {
       return <p>Click a book to see Details</p>;
     }
     return <p>Error :(</p>;

@@ -46,3 +46,27 @@ mutation addBook($name: String!, $genre: String!, $authorId: String!){
       name genre authorId
     }
 }`
+
+export const DELETE_BOOK = gql`
+mutation($id:ID!)  {
+    deleteBook (id:$id) {
+      id
+    }
+  }`
+
+export const UPDATE_BOOK = gql`
+  mutation($id:ID!,$name:String!,$genre:String!,$authorId:String!){
+    updateBook(
+      id:$id
+      name:$name
+      genre:$genre
+      authorId:$authorId
+    )
+      
+    {
+      id
+      name
+      genre
+      authorId
+    }
+  }`

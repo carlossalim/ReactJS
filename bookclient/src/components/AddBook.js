@@ -32,7 +32,7 @@ function AddBook() {
                     {displyaAuthors()}
                 </select>
             </div>
-            <button type="submit" className="btn btn-lg btn-primary">Add</button>
+            <button type="submit" className="btn btn-lg btn-primary px-4 flex ">Add</button>
         </form>
         {mutationLoading && <p>Loading...</p>}
         {mutationError && <p>Error :( Please try again</p>}
