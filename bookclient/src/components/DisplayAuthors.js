@@ -1,15 +1,8 @@
 import React from 'react'
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import { LIST_ALL_AUTHORS } from '../queries/queries'
 
 
-const LIST_ALL_AUTHORS = gql`
-  {
-    authors {
-        id
-        name
-    }
-  }
-`;
 
 
 function DisplyaAuthors() {
