@@ -13,11 +13,10 @@ function BookList() {
   }
   if (error) {
     // console.log('Error: ', error)
-    console.log('selectedBook', selectedBook)
     if (selectedBook == "") {
       return <p>Click a book to see Details</p>;
     }
-    //return <p>Error :(</p>;
+    return <p>Error :(</p>;
   }
 
   // console.log('data: ', data)

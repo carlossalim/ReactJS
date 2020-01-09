@@ -5,7 +5,7 @@ import { LIST_BOOK_DETAIL } from '../queries/queries'
 
 function BookDetails(props) {
 
-  const bookId = props.bookId.selectedBook 
+  const bookId = props.bookId.selectedBook
   const { loading, error, data } = useQuery(LIST_BOOK_DETAIL, { variables: { "id": bookId }, });
 
   if (loading) {
@@ -14,6 +14,9 @@ function BookDetails(props) {
   }
   if (error) {
     console.log('Error: ', error)
+    if (bookId == "") {
+      return <p>Click a book to see Details</p>;
+    }
     return <p>Error :(</p>;
   }
 
