@@ -7,6 +7,9 @@ const LIST_ALL_BOOK = gql`
       id
       name
       genre
+      author{
+        name
+      }
     }
   }
 `;
@@ -25,10 +28,10 @@ function BookList() {
         return <p>Error :(</p>;
     }
 
-    return data.books.map(({ id, name, genre }) => (
+    return data.books.map(({ id, name, genre, author }) => (
         <div key={id}>
             <ul>
-                <li name={id}   > {id}: {name}: {genre}</li>
+                <li name={id}   > {author.name}: {name}: {genre}</li>
             </ul>
         </div>
     ));

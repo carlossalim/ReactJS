@@ -1,29 +1,33 @@
 import React, { useState } from 'react';
-// import { useQuery, gql } from '@apollo/client';
+import { useMutation, gql } from '@apollo/client';
 import displyaAuthors from './DisplayAuthors'
 
 function AddBook() {
-
     const [name, setName] = useState("");
     const [genre, setGenre] = useState("");
     const [authorId, setAuthorId] = useState("");
-    console.log(name, genre, authorId)
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         name: '',
-    //         description: '',
-    //         email: '',
-    //         isLoading: false
-    //     }
 
-    //     this.changeHandler = this.changeHandler.bind(this);
-    // }
-    // changeHandler = (e) => {
-    //     this.setState({ [e.target.name]: e.target.value })
-    // }
+    const ADD_BOOK = gql`
+    mutation addBook($name: String!, $genre: String!, $authorId: String!){
+        addBook(name:$name, genre:$genre,  authorId:$authorId){
+          name genre authorId
+        }
+    }
+   
+        `
+    const [addBook, { data }] = useMutation(ADD_BOOK);
+    // console.log('ADD_BOOK', ADD_BOOK)
+    // console.log('name', name)
+    // console.log('genre', genre)
+    // console.log('authorId', authorId)
 
-    return <form>
+    return <form onSubmit={e => {
+        e.preventDefault();
+        console.log({ variables: { name, genre, authorId } })
+        addBook({ variables: { name, genre, authorId } })
+        // addBook({ variables: { name: { name }, genre: { genre }, authorId: { authorId } } })
+    }
+    }>
         <div className="field">
             <label>Name:</label>
             <input type="text" name="name" id="name" onChange={() => { setName(document.getElementById("name").value) }} required />
@@ -39,8 +43,8 @@ function AddBook() {
                 {displyaAuthors()}
             </select>
         </div>
-        <button onClick={() => { console.log(name, genre, authorId) }} >Add</button>
-    </form>
+        <button type="submit" >Add</button>
+    </form >
 
 
 }
