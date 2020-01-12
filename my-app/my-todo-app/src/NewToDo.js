@@ -39,8 +39,7 @@ class NewToDo extends React.Component {
                     value={this.state.taskDate}
                     onChange={this.handleChange}
                     placeholder="Date" /> <br />
-                <textarea
-
+                <textarea 
                     name="taskComment"
                     value={this.state.taskComment}
                     onChange={this.handleChange}
@@ -85,8 +84,8 @@ class NewToDo extends React.Component {
                 <br />
                 <br />
                 <button className="btn btn-primary">Submit</button>
-            </form >
-        </div >)
+            </form>
+        </div>)
     };
 }
 

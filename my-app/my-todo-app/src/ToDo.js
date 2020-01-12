@@ -2,7 +2,7 @@ import React from 'react';
 
 function ToDo(props) {
     const className = props.item.checked ? "completed" : null
-    console.log(className);
+    // console.log(className);
     return (
 
         <div className="card-deck mx-auto" style={{ width: 18 + 'rem' }}>
